@@ -1,2 +1,0 @@
-class CetegoriesController < ApplicationController
-end
