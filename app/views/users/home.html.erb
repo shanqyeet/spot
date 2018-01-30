@@ -49,6 +49,9 @@ this is the home page
   <div class="actions"><%= submit_tag "Log In" %></div>
 <% end %>
 
+<div class="col-md-4"><%= link_to raw('<i class="fa fa-facebook-official" aria-hidden="true"></i> Sign in with Facebook'), "/auth/facebook", class:"btn social-login" %></div>
+
+
 <!-- Log out form  -->
   <% if logged_in? %>
      <%= link_to 'Logout', logout_path, method: :delete %>

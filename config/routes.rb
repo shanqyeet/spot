@@ -12,4 +12,5 @@ Rails.application.routes.draw do
 
     post '/login', to: 'sessions#login', as: :login
     delete '/logout', to: 'sessions#logout', as: :logout
+    get "/auth/:provider/callback" => "sessions#create_from_omniauth"
 end
