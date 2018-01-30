@@ -1,4 +1,7 @@
+<div class="container">
+
 Hello Word
+
 
 this is the home page
 <% if flash.present? %>
@@ -7,6 +10,9 @@ this is the home page
 </div>
   <% end %>
 
+  <% if logged_in?  %>
+  <%= link_to "Post A Price", new_user_thing_path(current_user.id) %>
+  <% end %>
 
 <!-- Sign Up form  -->
 <p>Sign Up here</p>
@@ -21,7 +27,7 @@ this is the home page
     <%= f.password_field :password, class:"form-control" %>
   </div>
   <div class="form-group">
-    <%= f.submit "create", class:"form-control" %>
+    <%= f.submit "create", class:"btn btn-primary" %>
   </div>
   <% end %>
 </div>
@@ -47,3 +53,48 @@ this is the home page
   <% if logged_in? %>
      <%= link_to 'Logout', logout_path, method: :delete %>
   <% end %>
+
+ <% if @all_things.blank? %>
+   <p>Search for prices of things today!</p>
+<% else  %>
+  <table class="table table-hover">
+    <tr>
+      <th>Things</th>
+      <th>Price</th>
+      <th>unit</th>
+      <th>vendor</th>
+      <th>city</th>
+      <th>state</th>
+      <th>country</th>
+      <th>longitude</th>
+      <th>latitude</th>
+    </tr>
+    <% @all_things.each do |t| %>
+    <tr>
+      <td><%=t.name%></td>
+      <td><%=t.currency%> &nbsp; <%=t.price%> </td>
+      <td><%=t.unit%></td>
+      <td><%=t.vendor%></td>
+      <td><%=t.city%></td>
+      <td><%=t.state%></td>
+      <td><%=t.country%></td>
+      <td><%=t.longitude%></td>
+      <td><%=t.latitude%></td>
+      <% end %>
+    </tr>
+  </table>
+  <% end %>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+<script type="text/javascript">
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+});
+</script>
+</div>
