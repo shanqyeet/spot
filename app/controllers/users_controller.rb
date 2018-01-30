@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def home
-    @all_things = Thing.all
+    @all_things = Thing.order(created_at: :desc)
     # @all_things = Thing.near("Subang Jaya, Selangor", 20)
     # @search = @search.where(["name LIKE ?","%#{params[:search]}%"]) if params[:search].present?
     # @search = @search.where("event_type = ?", params[:event_type]) if params[:event_type].present?

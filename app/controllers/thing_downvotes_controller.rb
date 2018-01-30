@@ -1,10 +1,10 @@
 class ThingDownvotesController < ApplicationController
-  after_commit :update_exp
 
   def create
     @downvote = ThingDownvote.new(downvote_params)
     @downvote.user_id = current_user.id
     if @downvote.save
+      update_exp
       redirect_to request.referer
     else
       redirect_to request.referer, notice: "Sorry we weren't able to register your vote, please try again."
@@ -12,14 +12,14 @@ class ThingDownvotesController < ApplicationController
   end
 
   def destroy
-    @downvote = ThingDownvote.where(downvote_params)
-    @downvote.where(user_id: current_user.id)
-    @downvote.destroy_all
+    @downvote = ThingDownvote.find_by(downvote_params)
+    @downvote.destroy
+    update_exp
     redirect_to request.referer
   end
 
   def update_exp
-    @thing = Thing.find(upvote_params)
+    @thing = Thing.find(params[:thing_downvote][:thing_id])
     count = @thing.thing_upvotes.count - @thing.thing_downvotes.count
     if count <= 0
       @thing.update(allocated_exp: 0)
@@ -35,7 +35,7 @@ class ThingDownvotesController < ApplicationController
   private
 
   def downvote_params
-    params.require(:thing_downvote).permit(:thing_id)
+    params.require(:thing_downvote).permit(:thing_id, :user_id)
   end
 
 end

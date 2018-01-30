@@ -98,12 +98,14 @@ this is the home page
     <p>price: <% t.currency %> <%= t.price %> / <%= t.unit %></p>
     <% if logged_in? %>
     <!-- add or remove upvotes by current users limiting to only one vote per user -->
+    <% if t.user != current_user %>
       <div class="voting-box">
         <div class="upvote-button">
           <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
             <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
               <%= form_for ThingUpvote.new, url: add_upvote_path do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit do %>
                   <i class="glyphicon glyphicon-thumbs-up"></i>
                  <% end %>
@@ -111,6 +113,7 @@ this is the home page
             <% else %>
               <%= form_for :thing_upvote, url: remove_upvote_path, method: :delete do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit do %>
                   <i class="glyphicon glyphicon-thumbs-up" style="color:green"></i>
                  <% end %>
@@ -131,6 +134,7 @@ this is the home page
             <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
               <%= form_for ThingDownvote.new, url: add_downvote_path do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit do %>
                   <i class="glyphicon glyphicon-thumbs-down"></i>
                  <% end %>
@@ -138,6 +142,7 @@ this is the home page
             <% else %>
               <%= form_for :thing_downvote, url: remove_downvote_path, method: :delete do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit do %>
                   <i class="glyphicon glyphicon-thumbs-down" style="color:red"></i>
                  <% end %>
@@ -153,6 +158,7 @@ this is the home page
           <p><%= t.thing_downvotes.count %></p>
         </div>
       </div>
+      <% end %>
       <% end %>
   </div>
     <% end %>
