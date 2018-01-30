@@ -14,6 +14,7 @@ this is the home page
   <%= link_to "Post A Price", new_user_thing_path(current_user.id) %>
   <%= link_to 'Logout', logout_path, method: :delete %>
   <%= link_to 'My Shopping List', user_shopping_items_path(current_user.id)%>
+  <%= link_to "My Profile", user_path(current_user.id) %> 
 
 <% else %>
   <!-- Sign Up form  -->

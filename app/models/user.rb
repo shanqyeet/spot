@@ -29,4 +29,34 @@ class User < ApplicationRecord
     x = self.authentications.find_by(provider: 'facebook')
     return x.token unless x.nil?
   end
+
+  def name
+    first_name + ", " + last_name
+  end
+
+  def exp_calc
+    case
+    when level == 1
+      max_exp = 50
+    when level == 2
+      max_exp = 150
+    when level == 3
+      max_exp = 300
+    when level == 4
+      max_exp = 500
+    when level == 5
+      max_exp = 800
+    when level == 6
+      max_exp = 1200
+    when level == 7
+      max_exp = 1700
+    when level == 8
+      max_exp = 2500
+    when level == 9
+      max_exp = 3500
+    else
+      max_exp = 5000
+    end
+    actual = exp/max_exp.to_f * 100
+  end
 end
