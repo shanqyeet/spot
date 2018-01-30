@@ -1,0 +1,48 @@
+<%= form_for ShoppingItem.new, url:user_shopping_items_path do |f| %>
+<%= f.text_field :item %>
+<%= f.submit "create" %>
+<% end %>
+
+<div class="container">
+  <% if @shopping_items.blank? %>
+    <h3>Hey, you have no items on your list. create one today!</h3>
+  <% else %>
+    <table class="table table-hover">
+      <tr>
+        <% num = 0 %>
+        <th>no.</th>
+        <th>item</th>
+        <th>status</th>
+      </tr>
+      <% @shopping_items.each do |i| %>
+      <tr>
+        <td><%= num += 1 %></td>
+        <% if i.status == "Unchecked" %>
+        <td><%= i.item %></td>
+        <% else %>
+        <td><strike><%= i.item %></strike></td>
+        <% end %>
+        <td>
+          <% if i.status == "Unchecked" %>
+            <%= form_for :shopping_item, url:check_item_path(user_id: current_user.id, id: i.id), method: :post do |f| %>
+            <%= f.hidden_field :id, value:i.id %>
+            <%= f.hidden_field :user_id, value:current_user.id %>
+            <%= f.button :submit do %>
+              <i class="glyphicon glyphicon-unchecked"></i>
+              <%end%>
+            <% end %>
+          <% else %>
+            <%= form_for :shopping_item, url:uncheck_item_path(user_id: current_user.id, id: i.id), method: :post do |f| %>
+            <%= f.hidden_field :id, value:i.id %>
+            <%= f.hidden_field :user_id, value:current_user.id %>
+            <%= f.button :submit do %>
+              <i class="glyphicon glyphicon-check"></i>
+              <%end%>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  <% end %>
+</div>
