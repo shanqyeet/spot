@@ -14,7 +14,7 @@ this is the home page
   <%= link_to "Post A Price", new_user_thing_path(current_user.id) %>
   <%= link_to 'Logout', logout_path, method: :delete %>
   <%= link_to 'My Shopping List', user_shopping_items_path(current_user.id)%>
-  <%= link_to "My Profile", user_path(current_user.id) %> 
+  <%= link_to "My Profile", user_path(current_user.id) %>
 
 <% else %>
   <!-- Sign Up form  -->
@@ -78,7 +78,7 @@ this is the home page
     <% @all_things.each do |t| %>
     <tr>
       <td><%=t.name%></td>
-      <td><%=t.currency%> &nbsp; <%=t.price%> </td>
+      <td><%=t.currency%> <%=t.price%> </td>
       <td><%=t.unit%></td>
       <td><%=t.vendor%></td>
       <td><%=t.city%></td>
@@ -95,7 +95,7 @@ this is the home page
     <p>spotted by <%= t.user.email %> on <%= t.created_at.strftime('%d %B %Y') %> </p>
     <p>Goods/Services: <%= t.name %></p>
     <p>vendor: <%= t.vendor %></p>
-    <p>price: <% t.currency %> &nbpt; <%= t.price %> / <%= t.unit %></p>
+    <p>price: <% t.currency %> <%= t.price %> / <%= t.unit %></p>
     <% if logged_in? %>
     <!-- add or remove upvotes by current users limiting to only one vote per user -->
       <div class="voting-box">

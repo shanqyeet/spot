@@ -1,4 +1,5 @@
 class ThingDownvotesController < ApplicationController
+  after_commit :update_exp
 
   def create
     @downvote = ThingDownvote.new(downvote_params)
@@ -15,6 +16,20 @@ class ThingDownvotesController < ApplicationController
     @downvote.where(user_id: current_user.id)
     @downvote.destroy_all
     redirect_to request.referer
+  end
+
+  def update_exp
+    @thing = Thing.find(upvote_params)
+    count = @thing.thing_upvotes.count - @thing.thing_downvotes.count
+    if count <= 0
+      @thing.update(allocated_exp: 0)
+    elsif count > 0 && count <= 5
+      @thing
+    elsif count > 5 && count <= 15
+      @thing.update(allocated_exp: 3)
+    else
+      @thing.update(allocated_exp: 5)
+    end
   end
 
   private

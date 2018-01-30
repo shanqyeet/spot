@@ -32,9 +32,9 @@ function goBack() {
   <div class="user-spotting-history">
     <% @all_things.each do |a| %>
     <div class="well">
-      <h4>Spotted: <%= @all_things.name %></h4>
-      <p>Price: <%=@all_things.currency%> &nbpt; <%= @all_things.price%> per <%=@all_things.unit%></p>
-      <p>Location: <%=@all_things.city%>,<%=@all_things.state%>,<%=@all_things.country%></p>
+      <h4>Spotted: <%=  a.name %></h4>
+      <p>Price: <%= a.currency%> <%=  a.price%> per <%= a.unit%></p>
+      <p>Location: <%= a.city%>,<%= a.state%>,<%= a.country%></p>
     </div>
     <%end%>
   </div>

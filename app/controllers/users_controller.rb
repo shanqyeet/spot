@@ -18,12 +18,20 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @all_things = Thing.where(user_id:@user.id).order(created_at: :desc)
+    # Sum all exp and update user exp
+      collect = []
+      @all_things.each do |a|
+        collect << a.allocated_exp
+      end
+      sum_exp = collect.sum
+      @user.update(exp: sum_exp)
+    # Check and Update User Level
       if @user.level != @user.check_level
         @user.update(level: @user.check_level)
       else
         @user
       end
-    @all_things = Thing.where(user_id:@user.id).order(created_at: :desc)
   end
 
   def create
