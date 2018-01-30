@@ -1,0 +1,2 @@
+class ThingDownvotesController < ApplicationController
+end

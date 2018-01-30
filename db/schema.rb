@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130014345) do
+ActiveRecord::Schema.define(version: 20180130040817) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,24 @@ ActiveRecord::Schema.define(version: 20180130014345) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "thing_downvotes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "thing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["thing_id"], name: "index_thing_downvotes_on_thing_id"
+    t.index ["user_id"], name: "index_thing_downvotes_on_user_id"
+  end
+
+  create_table "thing_upvotes", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "thing_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["thing_id"], name: "index_thing_upvotes_on_thing_id"
+    t.index ["user_id"], name: "index_thing_upvotes_on_user_id"
   end
 
   create_table "things", force: :cascade do |t|
@@ -69,6 +87,10 @@ ActiveRecord::Schema.define(version: 20180130014345) do
   end
 
   add_foreign_key "authentications", "users"
+  add_foreign_key "thing_downvotes", "things"
+  add_foreign_key "thing_downvotes", "users"
+  add_foreign_key "thing_upvotes", "things"
+  add_foreign_key "thing_upvotes", "users"
   add_foreign_key "things", "categories"
   add_foreign_key "things", "users"
 end
