@@ -18,6 +18,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+      if @user.level != @user.check_level
+        @user.update(level: @user.check_level)
+      else
+        @user
+      end
     @all_things = Thing.where(user_id:@user.id).order(created_at: :desc)
   end
 

@@ -21,4 +21,22 @@ function goBack() {
       </div>
     </div>
   </div>
+
+  <% if @all_things.blank? %>
+    <% if @user == current_user%>
+    <h2>You haven't spotted anything yet, do it today! :)</h2>
+    <% else %>
+    <h2><%=@user.name%> hasn't spotted any thing yet.</h2>
+    <% end %>
+  <% else %>
+  <div class="user-spotting-history">
+    <% @all_things.each do |a| %>
+    <div class="well">
+      <h4>Spotted: <%= @all_things.name %></h4>
+      <p>Price: <%=@all_things.currency%> &nbpt; <%= @all_things.price%> per <%=@all_things.unit%></p>
+      <p>Location: <%=@all_things.city%>,<%=@all_things.state%>,<%=@all_things.country%></p>
+    </div>
+    <%end%>
+  </div>
+  <% end %>
 </div>

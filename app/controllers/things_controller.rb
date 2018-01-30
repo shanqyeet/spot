@@ -9,7 +9,6 @@ class ThingsController < ApplicationController
     @thing.user_id = current_user.id
     @thing.category_id = Category.find_by(name:params[:thing][:category]).id
     if @thing.save
-      @thing.errors
       redirect_to root_path, notice: "You have successfully spotted a new thing!"
     else
       @thing.errors
