@@ -12,5 +12,9 @@ Rails.application.routes.draw do
 
     post '/login', to: 'sessions#login', as: :login
     delete '/logout', to: 'sessions#logout', as: :logout
-    get "/auth/:provider/callback" => "sessions#create_from_omniauth"
+    get "/auth/:provider/callback", to: "sessions#create_from_omniauth"
+    post "/addupvote", to: "thing_upvotes#create", as: :add_upvote
+    delete "/removeupvote", to: "thing_upvotes#destroy", as: :remove_upvote
+    post "/adddownvote", to: "thing_downvotes#create", as: :add_downvote
+    delete "/removedownvote", to: "thing_downvotes#destroy", as: :remove_downvote
 end

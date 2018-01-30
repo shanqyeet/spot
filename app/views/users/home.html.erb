@@ -10,53 +10,54 @@ this is the home page
 </div>
   <% end %>
 
-  <% if logged_in?  %>
+<% if logged_in?  %>
   <%= link_to "Post A Price", new_user_thing_path(current_user.id) %>
+  <%= link_to 'Logout', logout_path, method: :delete %>
+
+<% else %>
+  <!-- Sign Up form  -->
+  <p>Sign Up here</p>
+  <div>
+    <%= form_for User.new do |f| %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.text_field :email, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit "create", class:"btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+
+  <!-- Login form -->
+
+  <p>Login Here</p>
+
+  <%= form_tag login_path do %>
+    <div class="field">
+      <%= label_tag :email %><br />
+      <%= text_field_tag :email, params[:email] %>
+    </div>
+    <div class="field">
+      <%= label_tag :password %><br />
+      <%= password_field_tag :password %>
+    </div>
+    <div class="actions"><%= submit_tag "Log In" %></div>
   <% end %>
 
-<!-- Sign Up form  -->
-<p>Sign Up here</p>
-<div>
-  <%= form_for User.new do |f| %>
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.text_field :email, class:"form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, class:"form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.submit "create", class:"btn btn-primary" %>
-  </div>
-  <% end %>
-</div>
-
-
-<!-- Login form -->
-
-<p>Login Here</p>
-
-<%= form_tag login_path do %>
-  <div class="field">
-    <%= label_tag :email %><br />
-    <%= text_field_tag :email, params[:email] %>
-  </div>
-  <div class="field">
-    <%= label_tag :password %><br />
-    <%= password_field_tag :password %>
-  </div>
-  <div class="actions"><%= submit_tag "Log In" %></div>
-<% end %>
-
-<div class="col-md-4"><%= link_to raw('<i class="fa fa-facebook-official" aria-hidden="true"></i> Sign in with Facebook'), "/auth/facebook", class:"btn social-login" %></div>
+  <div class="col-md-4"><%= link_to raw('<i class="fa fa-facebook-official" aria-hidden="true"></i> Sign in with Facebook'), "/auth/facebook", class:"btn social-login" %></div>
 
 
 <!-- Log out form  -->
-  <% if logged_in? %>
-     <%= link_to 'Logout', logout_path, method: :delete %>
   <% end %>
 
+
+<!-- Display of search and listing of things -->
  <% if @all_things.blank? %>
    <p>Search for prices of things today!</p>
 <% else  %>
@@ -93,10 +94,40 @@ this is the home page
     <p>Goods/Services: <%= t.name %></p>
     <p>vendor: <%= t.vendor %></p>
     <p>price: <% t.currency %> &nbpt; <%= t.price %> / <%= t.unit %></p>
-    <div class="">
-      <a href="#"><i class="glyphicon glyphicon-thumbs-up"></i></a>
-      <a href="#"><i class="glyphicon glyphicon-thumbs-down"></i></a>
-    </div>
+    <% if logged_in? %>
+    <!-- add or remove upvotes by current users limiting to only one vote per user -->
+      <div class="voting-box">
+        <div class="upvote-button">
+          <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
+            <%= form_for ThingUpvote.new, url: add_upvote_path do |f| %>
+            <%= f.hidden_field :thing_id, value:t.id %>
+            <%= f.submit "Up Vote" %>
+            <% end %>
+          <% else %>
+            <%= form_for :thing_upvote, url: remove_upvote_path, method: :delete do |f| %>
+            <%= f.hidden_field :thing_id, value:t.id %>
+            <%= f.submit "Up Vote" %>
+            <% end %>
+          <% end %>
+          <p><%= t.thing_upvotes.count %></p>
+        </div>
+    <!-- add or remove downvotes by current users limiting to only one vote per user -->
+        <div class="downvote-button">
+          <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
+            <%= form_for ThingDownvote.new, url: add_downvote_path do |f| %>
+            <%= f.hidden_field :thing_id, value:t.id %>
+            <%= f.submit "Down Vote" %>
+            <% end %>
+          <% else %>
+            <%= form_for :thing_downvote, url: remove_downvote_path, method: :delete do |f| %>
+            <%= f.hidden_field :thing_id, value:t.id %>
+            <%= f.submit "Down Vote" %>
+            <% end %>
+          <% end %>
+          <p><%= t.thing_downvotes.count %></p>
+        </div>
+      </div>
+      <% end %>
   </div>
     <% end %>
   <% end %>
