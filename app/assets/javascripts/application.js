@@ -17,3 +17,94 @@
 //= require underscore
 //= require gmaps/google
 //= require_tree .
+
+
+$(document).ready(function() {
+    console.log("Jquery Ready!");
+
+  // $(".upvote-form").submit(function(e){
+  //   e.preventDefault();
+  //
+  //   console.log("prevented default action");
+  //
+  //   $form = $(event.target);
+  //     $.ajax({
+  //       url: $form.attr('action'),
+  //       method: $form.attr('method'),
+  //       data: $form.serialize(),
+  //       dataType: "JSON",
+  //       success: function() {
+  //         $("#upvote-button").addClass("green-color");
+  //         // $("#sum_of_count").html(response.vote);
+  //
+  //         // console.log(response);
+  //         // console.log(response.vote_counts);
+  //       }
+  //     });
+  // });
+  //
+  // $(".downvote-form").submit(function(e){
+  //   e.preventDefault();
+  //
+  //   console.log("prevented default action");
+  //
+  //   $form = $(event.target);
+  //     $.ajax({
+  //       url: $form.attr('action'),
+  //       method: $form.attr('method'),
+  //       data: $form.serialize(),
+  //       dataType: "JSON",
+  //       success: function() {
+  //
+  //         $("#downvote-button").addClass("red-color");
+  //         // $("#sum_of_count").html(response.vote);
+  //
+  //         // console.log(response);
+  //         // console.log(response.vote_counts);
+  //       }
+  //     });
+  // });
+  // $(".upvote-form2").submit(function(e){
+  //   e.preventDefault();
+  //
+  //   console.log("prevented default action");
+  //
+  //   $form = $(event.target);
+  //     $.ajax({
+  //       url: $form.attr('action'),
+  //       method: $form.attr('method'),
+  //       data: $form.serialize(),
+  //       dataType: "JSON",
+  //       success: function() {
+  //
+  //         $("#upvote-button2").removeClass("green-color");
+  //         // $("#sum_of_count").html(response.vote);
+  //
+  //         // console.log(response);
+  //         // console.log(response.vote_counts);
+  //       }
+  //     });
+  // });
+  //
+  // $(".downvote-form2").submit(function(e){
+  //   e.preventDefault();
+  //
+  //   console.log("prevented default action");
+  //
+  //   $form = $(event.target);
+  //     $.ajax({
+  //       url: $form.attr('action'),
+  //       method: $form.attr('method'),
+  //       data: $form.serialize(),
+  //       dataType: "JSON",
+  //       success: function() {
+  //
+  //         $("#downvote-button2").removeClass("red-color");
+  //         // $("#sum_of_count").html(response.vote);
+  //
+  //         // console.log(response);
+  //         // console.log(response.vote_counts);
+  //       }
+  //     });
+  // });
+});

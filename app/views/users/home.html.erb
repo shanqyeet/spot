@@ -103,19 +103,19 @@ this is the home page
         <div class="upvote-button">
           <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
             <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
-              <%= form_for ThingUpvote.new, url: add_upvote_path do |f| %>
+              <%= form_for ThingUpvote.new, url: add_upvote_path, remote: true, method: :post, html:{class:"upvote-form"} do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
-              <%= f.button :submit do %>
-                  <i class="glyphicon glyphicon-thumbs-up"></i>
+              <%= f.button :submit do  %>
+                  <i class="glyphicon glyphicon-thumbs-up" id="upvote-button"></i>
                  <% end %>
                <% end %>
             <% else %>
-              <%= form_for :thing_upvote, url: remove_upvote_path, method: :delete do |f| %>
+              <%= form_for :thing_upvote, url: remove_upvote_path, html:{class:"upvote-form2"}, remote: true, method: :delete do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit do %>
-                  <i class="glyphicon glyphicon-thumbs-up" style="color:green"></i>
+                  <i class="glyphicon glyphicon-thumbs-up green-color" id="upvote-button2"></i>
                  <% end %>
               <% end %>
             <% end %>
@@ -126,25 +126,25 @@ this is the home page
                  <% end %>
                <% end %>
           <% end %>
-          <p><%= t.thing_upvotes.count %></p>
+          <p id="upvote-count"><%= t.thing_upvotes.count %></p>
         </div>
     <!-- add or remove downvotes by current users limiting to only one vote per user -->
         <div class="downvote-button">
           <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
             <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
-              <%= form_for ThingDownvote.new, url: add_downvote_path do |f| %>
+              <%= form_for ThingDownvote.new, url: add_downvote_path, html:{class:"downvote-form"} do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit do %>
-                  <i class="glyphicon glyphicon-thumbs-down"></i>
+                  <i class="glyphicon glyphicon-thumbs-down" id="downvote-button"></i>
                  <% end %>
                <% end %>
             <% else %>
-              <%= form_for :thing_downvote, url: remove_downvote_path, method: :delete do |f| %>
+              <%= form_for :thing_downvote, url: remove_downvote_path, html:{class:"downvote-form2"}, method: :delete do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit do %>
-                  <i class="glyphicon glyphicon-thumbs-down" style="color:red"></i>
+                  <i class="glyphicon glyphicon-thumbs-down red-color" id="downvote-button2"></i>
                  <% end %>
               <% end %>
             <% end %>
