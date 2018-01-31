@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180130040817) do
+ActiveRecord::Schema.define(version: 20180130213129) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,15 @@ ActiveRecord::Schema.define(version: 20180130040817) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "shopping_items", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "item"
+    t.integer "status", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_shopping_items_on_user_id"
   end
 
   create_table "thing_downvotes", force: :cascade do |t|
@@ -65,6 +74,7 @@ ActiveRecord::Schema.define(version: 20180130040817) do
     t.float "latitude"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "allocated_exp", default: 1
     t.index ["category_id"], name: "index_things_on_category_id"
     t.index ["user_id"], name: "index_things_on_user_id"
   end
@@ -87,6 +97,7 @@ ActiveRecord::Schema.define(version: 20180130040817) do
   end
 
   add_foreign_key "authentications", "users"
+  add_foreign_key "shopping_items", "users"
   add_foreign_key "thing_downvotes", "things"
   add_foreign_key "thing_downvotes", "users"
   add_foreign_key "thing_upvotes", "things"

@@ -1,0 +1,42 @@
+<%= link_to "Back", root_path %>
+
+<!-- Javascript way to return back to the previous page -->
+<button onclick="goBack()">Go Back</button>
+
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+
+<div class="container">
+  <div class="user-profile well">
+    <h1>Hi, I'm <%= @user.name %> </h1>
+    <p><%= @user.gender %></p>
+    <p><%= @user.city%> &middot;  <%= @user.state%>  &middot;  <%=@user.country %></p>
+    <p>Level: <%= @user.level %> </p>
+    <p>Exp: <%= @user.exp %></p>
+    <div class="progress">
+      <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:<%=@user.exp_calc%>%">
+      </div>
+    </div>
+  </div>
+
+  <% if @all_things.blank? %>
+    <% if @user == current_user%>
+    <h2>You haven't spotted anything yet, do it today! :)</h2>
+    <% else %>
+    <h2><%=@user.name%> hasn't spotted any thing yet.</h2>
+    <% end %>
+  <% else %>
+  <div class="user-spotting-history">
+    <% @all_things.each do |a| %>
+    <div class="well">
+      <h4>Spotted: <%=  a.name %></h4>
+      <p>Price: <%= a.currency%> <%=  a.price%> per <%= a.unit%></p>
+      <p>Location: <%= a.city%>,<%= a.state%>,<%= a.country%></p>
+    </div>
+    <%end%>
+  </div>
+  <% end %>
+</div>

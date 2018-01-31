@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def home
-    @all_things = Thing.all
+    @all_things = Thing.order(created_at: :desc)
     # @all_things = Thing.near("Subang Jaya, Selangor", 20)
     # @search = @search.where(["name LIKE ?","%#{params[:search]}%"]) if params[:search].present?
     # @search = @search.where("event_type = ?", params[:event_type]) if params[:event_type].present?
@@ -14,6 +14,24 @@ class UsersController < ApplicationController
       info = "#{thing.name} " + "#{thing.currency} " + "#{thing.price}"
       marker.infowindow info
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @all_things = Thing.where(user_id:@user.id).order(created_at: :desc)
+    # Sum all exp and update user exp
+      collect = []
+      @all_things.each do |a|
+        collect << a.allocated_exp
+      end
+      sum_exp = collect.sum
+      @user.update(exp: sum_exp)
+    # Check and Update User Level
+      if @user.level != @user.check_level
+        @user.update(level: @user.check_level)
+      else
+        @user
+      end
   end
 
   def create
