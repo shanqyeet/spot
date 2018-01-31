@@ -1,3 +1,171 @@
+<div class="container">
+
 Hello Word
 
-this is the home page 
+
+this is the home page
+<% if flash.present? %>
+<div class="alert well">
+  <%= flash.notice %>
+</div>
+  <% end %>
+
+<% if logged_in?  %>
+  <%= link_to "Post A Price", new_user_thing_path(current_user.id) %>
+  <%= link_to 'Logout', logout_path, method: :delete %>
+
+<% else %>
+  <!-- Sign Up form  -->
+  <p>Sign Up here</p>
+  <div>
+    <%= form_for User.new do |f| %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <%= f.text_field :email, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, class:"form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit "create", class:"btn btn-primary" %>
+    </div>
+    <% end %>
+  </div>
+
+
+  <!-- Login form -->
+
+  <p>Login Here</p>
+
+  <%= form_tag login_path do %>
+    <div class="field">
+      <%= label_tag :email %><br />
+      <%= text_field_tag :email, params[:email] %>
+    </div>
+    <div class="field">
+      <%= label_tag :password %><br />
+      <%= password_field_tag :password %>
+    </div>
+    <div class="actions"><%= submit_tag "Log In" %></div>
+  <% end %>
+
+  <div class="col-md-4"><%= link_to raw('<i class="fa fa-facebook-official" aria-hidden="true"></i> Sign in with Facebook'), "/auth/facebook", class:"btn social-login" %></div>
+
+
+<!-- Log out form  -->
+  <% end %>
+
+
+<!-- Display of search and listing of things -->
+ <% if @all_things.blank? %>
+   <p>Search for prices of things today!</p>
+<% else  %>
+  <table class="table table-hover">
+    <tr>
+      <th>Things</th>
+      <th>Price</th>
+      <th>unit</th>
+      <th>vendor</th>
+      <th>city</th>
+      <th>state</th>
+      <th>country</th>
+      <th>longitude</th>
+      <th>latitude</th>
+    </tr>
+    <% @all_things.each do |t| %>
+    <tr>
+      <td><%=t.name%></td>
+      <td><%=t.currency%> &nbsp; <%=t.price%> </td>
+      <td><%=t.unit%></td>
+      <td><%=t.vendor%></td>
+      <td><%=t.city%></td>
+      <td><%=t.state%></td>
+      <td><%=t.country%></td>
+      <td><%=t.longitude%></td>
+      <td><%=t.latitude%></td>
+      <% end %>
+    </tr>
+  </table>
+
+    <% @all_things.each do |t| %>
+  <div class="well">
+    <p>spotted by <%= t.user.email %> on <%= t.created_at.strftime('%d %B %Y') %> </p>
+    <p>Goods/Services: <%= t.name %></p>
+    <p>vendor: <%= t.vendor %></p>
+    <p>price: <% t.currency %> &nbpt; <%= t.price %> / <%= t.unit %></p>
+    <% if logged_in? %>
+    <!-- add or remove upvotes by current users limiting to only one vote per user -->
+      <div class="voting-box">
+        <div class="upvote-button">
+          <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
+            <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
+              <%= form_for ThingUpvote.new, url: add_upvote_path, remote: true, method: :post, html:{class:"upvote-form"} do |f| %>
+              <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.button :submit do  %>
+                  <i class="glyphicon glyphicon-thumbs-up" id="upvote-button"></i>
+                 <% end %>
+               <% end %>
+            <% else %>
+              <%= form_for :thing_upvote, url: remove_upvote_path, html:{class:"upvote-form2"}, remote: true, method: :delete do |f| %>
+              <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.button :submit do %>
+                  <i class="glyphicon glyphicon-thumbs-up green-color" id="upvote-button2"></i>
+                 <% end %>
+              <% end %>
+            <% end %>
+          <% else %>
+              <%= form_for ThingUpvote.new, url: add_upvote_path do |f| %>
+              <%= f.button :submit, disabled:true do %>
+                  <i class="glyphicon glyphicon-thumbs-up"></i>
+                 <% end %>
+               <% end %>
+          <% end %>
+          <p id="upvote-count"><%= t.thing_upvotes.count %></p>
+        </div>
+    <!-- add or remove downvotes by current users limiting to only one vote per user -->
+        <div class="downvote-button">
+          <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
+            <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
+              <%= form_for ThingDownvote.new, url: add_downvote_path, html:{class:"downvote-form"} do |f| %>
+              <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.button :submit do %>
+                  <i class="glyphicon glyphicon-thumbs-down" id="downvote-button"></i>
+                 <% end %>
+               <% end %>
+            <% else %>
+              <%= form_for :thing_downvote, url: remove_downvote_path, html:{class:"downvote-form2"}, method: :delete do |f| %>
+              <%= f.hidden_field :thing_id, value:t.id %>
+              <%= f.button :submit do %>
+                  <i class="glyphicon glyphicon-thumbs-down red-color" id="downvote-button2"></i>
+                 <% end %>
+              <% end %>
+            <% end %>
+          <% else %>
+              <%= form_for ThingDownvote.new, url: add_downvote_path do |f| %>
+              <%= f.button :submit, disabled:true do %>
+                  <i class="glyphicon glyphicon-thumbs-down"></i>
+                 <% end %>
+               <% end %>
+          <% end %>
+          <p><%= t.thing_downvotes.count %></p>
+        </div>
+      </div>
+      <% end %>
+  </div>
+    <% end %>
+  <% end %>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+
+<script type="text/javascript">
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers(<%=raw @hash.to_json %>);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+});
+</script>
+</div>
