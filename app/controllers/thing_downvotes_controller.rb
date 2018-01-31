@@ -4,7 +4,7 @@ class ThingDownvotesController < ApplicationController
     @downvote = ThingDownvote.new(downvote_params)
     @downvote.user_id = current_user.id
     if @downvote.save
-      redirect_to request.referer
+      # redirect_to request.referer
     else
       redirect_to request.referer, notice: "Sorry we weren't able to register your vote, please try again."
     end

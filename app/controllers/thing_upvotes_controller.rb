@@ -4,7 +4,8 @@ class ThingUpvotesController < ApplicationController
     @upvote = ThingUpvote.new(upvote_params)
     @upvote.user_id = current_user.id
     if @upvote.save
-      redirect_to request.referer
+      {vote:1, saved: true}.to_json
+      # redirect_to request.referer
     else
       redirect_to request.referer, notice: "Sorry we weren't able to register your vote, please try again."
     end
