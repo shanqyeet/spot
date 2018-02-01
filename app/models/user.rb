@@ -10,8 +10,8 @@ class User < ApplicationRecord
   has_many :shopping_items
 
   validates :email, presence: true, uniqueness: true
-  validates :password, presence: true, confirmation: true #password_confirmation attr
-  # validates_length_of :password, in: 6..30, on: :create
+  validates :password, presence: true, on: :create
+
 
   include BCrypt
 

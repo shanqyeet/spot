@@ -29,7 +29,7 @@
 <!-- Display of search and listing of things -->
 <div class="container">
  <% if @all_things.blank? %>
-   <p>Search for prices of things today!</p>
+   <h4 class="text-center">Search for prices of things today!</h4>
 <% else  %>
   <h1 class="text-center">Latest Price Spotting Near You</h1>
   <% @all_things.each do |t| %>

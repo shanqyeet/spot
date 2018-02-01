@@ -33,7 +33,11 @@
         </div>
       </div>
     <div class="row well text-center">
-      <button><%= link_to "Edit", edit_user_path(@user) %></button>
+      <% if @user == current_user %>
+      <div>
+        <%= link_to "Edit", edit_user_path(@user), class:"btn btn-primary" %>
+      </div>
+      <% end %>
       <% if !@user.first_name.nil? %>
       <h3>Hi, I'm <%= @user.name %> </h3>
       <% end %>

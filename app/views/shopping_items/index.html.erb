@@ -9,21 +9,24 @@
     </script>
 
   <h1 class="text-center">My Shopping List</h1>
-  <div class="shopping-list-form col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
-    <%= form_for ShoppingItem.new, url:user_shopping_items_path do |f| %>
-    <div class="form-group">
-      <div class="col-lg-10 col-md-10">
-        <%= f.text_field :item, class:"form-control" %>
+  <div class="row">
+
+    <div class="shopping-list-form col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
+      <%= form_for ShoppingItem.new, url:user_shopping_items_path do |f| %>
+      <div class="form-group">
+        <div class="col-lg-10 col-md-10">
+          <%= f.text_field :item, class:"form-control" %>
+        </div>
+        <div class="col-lg-2 col-md-2">
+          <%= f.submit "Create", class:"btn btn-danger" %>
+        </div>
       </div>
-      <div class="col-lg-2 col-md-2">
-        <%= f.submit "Create", class:"btn btn-danger" %>
-      </div>
+      <% end %>
     </div>
-    <% end %>
   </div>
 
   <% if @shopping_items.blank? %>
-  <div class="row">
+  <div class="row text-center">
     <h3>Hey, you have no items on your list. create one today!</h3>
   </div>
   <% else %>
