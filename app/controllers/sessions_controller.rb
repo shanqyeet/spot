@@ -5,10 +5,11 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(params[:password])
       log_in @user
       params[:remember_me] == '1' ? remember(@user) : forget(@user)
-      redirect_to root_path, notice:"Successfully Logged In"
+      flash[:notice] = 'Successfully Logged In'
+      redirect_to root_path
     else
-      flash.now.alert = 'Email or password is invalid'
-      redirect_to 'users#home'
+      flash[:notice] = 'Email or password is invalid'
+      redirect_to request.referer
     end
   end
 

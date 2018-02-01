@@ -11,7 +11,6 @@ class ThingsController < ApplicationController
     if @thing.save
       redirect_to root_path, notice: "You have successfully spotted a new thing!"
     else
-      @thing.errors
       redirect_to request.referer, notice:"There is an error in your last spotting, please try again"
     end
   end
