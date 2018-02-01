@@ -33,7 +33,9 @@
         </div>
       </div>
     <div class="row well text-center">
+      <% if !@user.first_name.nil? %>
       <h3>Hi, I'm <%= @user.name %> </h3>
+      <% end %>
       <p><%= @user.gender %></p>
       <p><%= @user.city%> &middot;  <%= @user.state%>  &middot;  <%=@user.country %></p>
     </div>

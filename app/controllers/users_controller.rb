@@ -42,6 +42,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.level = 1
+    @user.exp = 0
     if @user.save
       flash[:notice] = "You signed up successfully"
       flash[:color] = "valid"
@@ -49,8 +51,8 @@ class UsersController < ApplicationController
       flash[:notice] = "Form is invalid"
       flash[:color] = "invalid"
     end
-    @user.errors
-    redirect_to request.referrer
+    log_in @user
+    redirect_to @user
   end
 
 
