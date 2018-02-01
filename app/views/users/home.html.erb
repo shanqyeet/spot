@@ -44,14 +44,14 @@
     <% if logged_in? %>
     <!-- add or remove upvotes by current users limiting to only one vote per user -->
     <% if t.user != current_user %>
-      <div class="voting-box">
-        <div class="upvote-button">
+      <div class="voting-box row">
+        <div class="upvote-button col-lg-6 col-md-6">
           <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
             <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
               <%= form_for ThingUpvote.new, url: add_upvote_path, remote: true, method: :post, html:{class:"upvote-form"} do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
-              <%= f.button :submit do  %>
+              <%= f.button :submit, class:"vote-btn" do  %>
                   <i class="glyphicon glyphicon-thumbs-up" id="upvote-button"></i>
                  <% end %>
                <% end %>
@@ -59,28 +59,28 @@
               <%= form_for :thing_upvote, url: remove_upvote_path, html:{class:"upvote-form2"}, remote: true, method: :delete do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
-              <%= f.button :submit do %>
+              <%= f.button :submit, class:"vote-btn" do %>
                   <i class="glyphicon glyphicon-thumbs-up green-color" id="upvote-button2"></i>
                  <% end %>
               <% end %>
             <% end %>
           <% else %>
               <%= form_for ThingUpvote.new, url: add_upvote_path do |f| %>
-              <%= f.button :submit, disabled:true do %>
+              <%= f.button :submit, class:"vote-btn", disabled:true do %>
                   <i class="glyphicon glyphicon-thumbs-up"></i>
                  <% end %>
                <% end %>
           <% end %>
-          <p id="upvote-count"><%= t.thing_upvotes.count %></p>
+          <strong style="font-size:1.25em;" id="upvote-count"><%= t.thing_upvotes.count %></strong>
         </div>
     <!-- add or remove downvotes by current users limiting to only one vote per user -->
-        <div class="downvote-button">
+        <div class="downvote-button col-log-6 col-md-6">
           <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
             <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
               <%= form_for ThingDownvote.new, url: add_downvote_path, html:{class:"downvote-form"} do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
-              <%= f.button :submit do %>
+              <%= f.button :submit, class:"vote-btn" do %>
                   <i class="glyphicon glyphicon-thumbs-down" id="downvote-button"></i>
                  <% end %>
                <% end %>
@@ -88,19 +88,19 @@
               <%= form_for :thing_downvote, url: remove_downvote_path, html:{class:"downvote-form2"}, method: :delete do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
-              <%= f.button :submit do %>
+              <%= f.button :submit, class:"vote-btn" do %>
                   <i class="glyphicon glyphicon-thumbs-down red-color" id="downvote-button2"></i>
                  <% end %>
               <% end %>
             <% end %>
           <% else %>
               <%= form_for ThingDownvote.new, url: add_downvote_path do |f| %>
-              <%= f.button :submit, disabled:true do %>
+              <%= f.button :submit, class:"vote-btn", disabled:true do %>
                   <i class="glyphicon glyphicon-thumbs-down"></i>
                  <% end %>
                <% end %>
           <% end %>
-          <p><%= t.thing_downvotes.count %></p>
+          <strong style="font-size:1.25em;"><%= t.thing_downvotes.count %></strong>
         </div>
       </div>
       <% end %>
