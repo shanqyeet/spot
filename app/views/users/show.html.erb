@@ -36,8 +36,12 @@
       <% if !@user.first_name.nil? %>
       <h3>Hi, I'm <%= @user.name %> </h3>
       <% end %>
+      <% if !@user.gender.nil? %>
       <p><%= @user.gender %></p>
+      <% end %>
+      <% if !@user.city.nil? && !@user.state.nil? && !@user.country.nil? %>
       <p><%= @user.city%> &middot;  <%= @user.state%>  &middot;  <%=@user.country %></p>
+      <% end %>
     </div>
   </div>
 </div>
