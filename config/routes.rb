@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :shopping_items
     end
 
+    get '/signup', to: 'users#signup', as: :signup
+    get '/signin', to: 'users#signin', as: :signin
     post '/login', to: 'sessions#login', as: :login
     delete '/logout', to: 'sessions#logout', as: :logout
     get "/auth/:provider/callback", to: "sessions#create_from_omniauth"

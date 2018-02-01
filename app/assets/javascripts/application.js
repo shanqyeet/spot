@@ -22,6 +22,24 @@
 $(document).ready(function() {
     console.log("Jquery Ready!");
 
+  // $("#signup-btn").on("click", function(){
+  //   $suForm = $("#signup-form")
+  //   if ($suForm.hasClass("hidden")) {
+  //     $suForm.removeClass("hidden")
+  //   } else {
+  //     $suForm.addClass("hidden")
+  //   }
+  // });
+  //
+  // $("#login-btn").on("click", function(){
+  //   $loForm = $("#login-form")
+  //   if ($loForm.hasClass("hidden")) {
+  //     $loForm.removeClass("hidden")
+  //   } else {
+  //     $loForm.addClass("hidden")
+  //   }
+  // });
+
   // Checking and crossing out completed shopping items
   $(".check-form").submit('turbolinks:load',function(e){
     e.preventDefault();
