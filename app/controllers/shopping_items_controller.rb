@@ -21,13 +21,13 @@ class ShoppingItemsController < ApplicationController
     def check
       @status = ShoppingItem.find_by(item_params)
       @status.Checked!
-      redirect_to request.referer
+      # redirect_to request.referer
     end
 
     def uncheck
       @status = ShoppingItem.find_by(item_params)
       @status.Unchecked!
-      redirect_to request.referer
+      # redirect_to request.referer
     end
 
     private
