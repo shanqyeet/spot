@@ -21,12 +21,14 @@ class ShoppingItemsController < ApplicationController
     def check
       @status = ShoppingItem.find_by(item_params)
       @status.Checked!
+      render json: {user_id: @status.user_id, id:@status.id}
       # redirect_to request.referer
     end
 
     def uncheck
       @status = ShoppingItem.find_by(item_params)
       @status.Unchecked!
+      render json: {user_id: @status.user_id, id:@status.id}
       # redirect_to request.referer
     end
 

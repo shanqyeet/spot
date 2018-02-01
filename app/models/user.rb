@@ -4,12 +4,12 @@ class User < ApplicationRecord
   has_secure_password
   has_many :things
   has_many :authentications, dependent: :destroy
-  has_many :things, through: :thing_upvotes
-  has_many :things, through: :thing_downvotes
+  has_many :thing_upvotes
+  has_many :thing_downvotes
   has_many :shopping_items
 
   validates :email, presence: true, uniqueness: true
-  validates :password, confirmation: true #password_confirmation attr
+  validates :password, presence: true, confirmation: true #password_confirmation attr
   # validates_length_of :password, in: 6..30, on: :create
 
   include BCrypt

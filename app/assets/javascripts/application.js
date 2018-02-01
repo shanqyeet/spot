@@ -27,8 +27,7 @@ $(document).ready(function() {
     e.preventDefault();
     console.log("prevented default")
 
-    $check_btn = $('#check-button');
-    $check_text = $('#unchecked-shopping-item');
+
     $check = $(event.target);
 
     $.ajax({
@@ -37,10 +36,17 @@ $(document).ready(function() {
       data: $check.serialize(),
       dataType: "JSON",
       success: function(response) {
-        console.log("success");
-        $check_btn.removeClass("glyphicon-unchecked");
-        $check_btn.addClass("glyphicon-check");
-        $check_text.addClass("strike-text");
+          if ($check.find("i").hasClass("glyphicon-unchecked")) {
+            $check.find("i").removeClass("glyphicon-unchecked");
+            $check.find("i").addClass("glyphicon-check");
+            $check.parent().siblings(".shopping-item").addClass("strike-text");
+            $check.attr("action", "/users/" + response.user_id + "/shopping_items/" + response.id + "/uncheck");
+          } else {
+            $check.find("i").removeClass("glyphicon-check");
+            $check.find("i").addClass("glyphicon-unchecked");
+            $check.parent().siblings(".shopping-item").removeClass("strike-text");
+            $check.attr("action", "/users/" + response.user_id + "/shopping_items/" + response.id + "/check");
+          }
         }
       });
     });
@@ -50,20 +56,25 @@ $(document).ready(function() {
     e.preventDefault();
     console.log("prevented default")
 
-    $uncheck_btn = $('#uncheck-button');
-    $uncheck_text = $('#checked-shopping-item');
-    $check = $(event.target);
+    $uncheck = $(event.target);
 
     $.ajax({
-      url: $check.attr('action'),
-      method: $check.attr('method'),
-      data: $check.serialize(),
+      url: $uncheck.attr('action'),
+      method: $uncheck.attr('method'),
+      data: $uncheck.serialize(),
       dataType: "JSON",
       success: function(response) {
-        console.log("success");
-        $uncheck_btn.removeClass("glyphicon-check");
-        $uncheck_btn.addClass("glyphicon-unchecked");
-        $uncheck_text.removeClass("strike-text");
+        if ($uncheck.find("i").hasClass("glyphicon-check")) {
+          $uncheck.find("i").removeClass("glyphicon-check");
+          $uncheck.find("i").addClass("glyphicon-unchecked");
+          $uncheck.parent().siblings(".shopping-item").removeClass("strike-text");
+          $uncheck.attr("action", "/users/" + response.user_id + "/shopping_items/" + response.id + "/check");
+        } else {
+          $uncheck.find("i").removeClass("glyphicon-unchecked");
+          $uncheck.find("i").addClass("glyphicon-check");
+          $uncheck.parent().siblings(".shopping-item").addClass("strike-text");
+          $uncheck.attr("action", "/users/" + response.user_id + "/shopping_items/" + response.id + "/uncheck");
+        }
         }
       });
     });

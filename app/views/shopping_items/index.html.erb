@@ -18,9 +18,9 @@
       <tr>
         <td><%= num += 1 %></td>
         <% if i.status == "Unchecked" %>
-        <td id="unchecked-shopping-item"><%= i.item %></td>
+        <td class="shopping-item"><%= i.item %></td>
         <% else %>
-        <td id="checked-shopping-item" class="strike-text"><%= i.item %></td>
+        <td class="shopping-item strike-text"><%= i.item %></td>
         <% end %>
         <td>
           <% if i.status == "Unchecked" %>
