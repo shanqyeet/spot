@@ -15,3 +15,33 @@
 .strike-text {
   text-decoration: line-through;
 }
+
+
+.navbar-logo {
+  height: 60px;
+}
+
+.navbar {
+  background-color: white;
+  padding: 10px;
+  border-bottom: 1px solid #ececec;
+  box-shadow: 3px 0px 10px 3px #ececec;
+}
+
+.thing-box {
+  padding: 20px;
+  margin:10px;
+  min-height: 200px;
+  width: 250px;
+  border:1px solid grey;
+  box-shadow: 3px 3px 5px 2px #ececec;
+
+}
+
+.footer {
+  height: 100px;
+  background-color:#E6E6FA;
+  padding-top:45px;
+  margin-top:30px;
+
+}

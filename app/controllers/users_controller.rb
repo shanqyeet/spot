@@ -16,6 +16,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def signup
+  end
+
+  def signin
+  end
+
   def show
     @user = User.find(params[:id])
     @all_things = Thing.where(user_id:@user.id).order(created_at: :desc)

@@ -4,6 +4,7 @@ class SessionsController < ApplicationController
     @user = User.find_by(email: params[:email])
     if @user && @user.authenticate(params[:password])
       log_in @user
+      params[:remember_me] == '1' ? remember(@user) : forget(@user)
       redirect_to root_path
       flash[:notice] = "Logged In!"
     else
@@ -13,7 +14,7 @@ class SessionsController < ApplicationController
   end
 
   def logout
-    log_out
+    log_out if logged_in?
     redirect_to root_path
     flash[:notice] = 'Logged out!'
   end

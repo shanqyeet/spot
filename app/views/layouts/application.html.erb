@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Spot</title>
+    <%= favicon_link_tag asset_path('spot-logo.png'), rel: 'icon', type: 'image/png' %>
     <%= csrf_meta_tags %>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge"> <!-- † -->
@@ -15,6 +16,11 @@
   </head>
 
   <body>
+    <%= render partial: "/layouts/navbar" %>
+    <div style="height:100px;">
+    </div>
     <%= yield %>
+    <%= render partial: "/layouts/footer" %>
+
   </body>
 </html>
