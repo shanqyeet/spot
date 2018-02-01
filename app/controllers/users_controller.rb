@@ -55,11 +55,20 @@ class UsersController < ApplicationController
     redirect_to @user
   end
 
+  def edit
+    @user = User.find(current_user.id)
+  end
+
+  def update
+    @user.update(user_params)
+    redirect_to request.referer
+  end
+
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, :first_name, :last_name, :gender, :city, :state, :country)
   end
 
 
