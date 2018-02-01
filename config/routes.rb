@@ -24,4 +24,7 @@ Rails.application.routes.draw do
     # Shoping List routes
     post "users/:user_id/shopping_items/:id/check", to: "shopping_items#check", as: :check_item
     post "users/:user_id/shopping_items/:id/uncheck", to: "shopping_items#uncheck", as: :uncheck_item
+
+    # Search routes
+    get "/search", to: "things#search", as: :search
 end

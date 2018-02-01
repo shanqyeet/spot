@@ -16,6 +16,18 @@ class ThingsController < ApplicationController
     end
   end
 
+  def search
+    @search = Thing.all
+    @search = @search.where(["name LIKE ?","%#{params[:search]}%"]) if params[:search].present?
+    @search = @search.where("country = ?", params[:country]) if params[:country].present?
+    @search = @search.where("state = ?", params[:state]) if params[:state].present?
+    @search = @search.where("city = ?", params[:city]) if params[:city].present?
+    @hash = Gmaps4rails.build_markers(@search) do |thing, marker|
+      marker.lat thing.latitude
+      marker.lng thing.longitude
+    end
+  end
+
   private
 
   def thing_params

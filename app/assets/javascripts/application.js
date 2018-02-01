@@ -10,9 +10,9 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
 //= require rails-ujs
 //= require turbolinks
+//= require jquery
 //= require bootstrap-sprockets
 //= require underscore
 //= require gmaps/google
@@ -21,6 +21,52 @@
 
 $(document).ready(function() {
     console.log("Jquery Ready!");
+
+  // Checking and crossing out completed shopping items
+  $(".check-form").submit('turbolinks:load',function(e){
+    e.preventDefault();
+    console.log("prevented default")
+
+    $check_btn = $('#check-button');
+    $check_text = $('#unchecked-shopping-item');
+    $check = $(event.target);
+
+    $.ajax({
+      url: $check.attr('action'),
+      method: $check.attr('method'),
+      data: $check.serialize(),
+      dataType: "JSON",
+      success: function(response) {
+        console.log("success");
+        $check_btn.removeClass("glyphicon-unchecked");
+        $check_btn.addClass("glyphicon-check");
+        $check_text.addClass("strike-text");
+        }
+      });
+    });
+
+  // unchecking misakenly crossed out shopping items
+  $(".uncheck-form").submit('turbolinks:load',function(e){
+    e.preventDefault();
+    console.log("prevented default")
+
+    $uncheck_btn = $('#uncheck-button');
+    $uncheck_text = $('#checked-shopping-item');
+    $check = $(event.target);
+
+    $.ajax({
+      url: $check.attr('action'),
+      method: $check.attr('method'),
+      data: $check.serialize(),
+      dataType: "JSON",
+      success: function(response) {
+        console.log("success");
+        $uncheck_btn.removeClass("glyphicon-check");
+        $uncheck_btn.addClass("glyphicon-unchecked");
+        $uncheck_text.removeClass("strike-text");
+        }
+      });
+    });
 
   // $(".upvote-form").submit(function(e){
   //   e.preventDefault();
@@ -41,8 +87,8 @@ $(document).ready(function() {
   //         // console.log(response.vote_counts);
   //       }
   //     });
-  // });
-  //
+  //   });
+
   // $(".downvote-form").submit(function(e){
   //   e.preventDefault();
   //

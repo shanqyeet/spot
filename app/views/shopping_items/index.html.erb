@@ -18,25 +18,25 @@
       <tr>
         <td><%= num += 1 %></td>
         <% if i.status == "Unchecked" %>
-        <td><%= i.item %></td>
+        <td id="unchecked-shopping-item"><%= i.item %></td>
         <% else %>
-        <td><strike><%= i.item %></strike></td>
+        <td id="checked-shopping-item" class="strike-text"><%= i.item %></td>
         <% end %>
         <td>
           <% if i.status == "Unchecked" %>
-            <%= form_for :shopping_item, url:check_item_path(user_id: current_user.id, id: i.id), method: :post do |f| %>
+            <%= form_for :shopping_item, url:check_item_path(user_id: current_user.id, id: i.id), method: :post, html:{class:"check-form"} do |f| %>
             <%= f.hidden_field :id, value:i.id %>
             <%= f.hidden_field :user_id, value:current_user.id %>
             <%= f.button :submit do %>
-              <i class="glyphicon glyphicon-unchecked"></i>
+              <i class="glyphicon glyphicon-unchecked" id="check-button"></i>
               <%end%>
             <% end %>
           <% else %>
-            <%= form_for :shopping_item, url:uncheck_item_path(user_id: current_user.id, id: i.id), method: :post do |f| %>
+            <%= form_for :shopping_item, url:uncheck_item_path(user_id: current_user.id, id: i.id), method: :post, html:{class:"uncheck-form"} do |f| %>
             <%= f.hidden_field :id, value:i.id %>
             <%= f.hidden_field :user_id, value:current_user.id %>
             <%= f.button :submit do %>
-              <i class="glyphicon glyphicon-check"></i>
+              <i class="glyphicon glyphicon-check" id="uncheck-button"></i>
               <%end%>
             <% end %>
           <% end %>
