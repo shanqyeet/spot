@@ -4,8 +4,9 @@ class ThingUpvotesController < ApplicationController
     @upvote = ThingUpvote.new(upvote_params)
     @upvote.user_id = current_user.id
     if @upvote.save
-      render json: { vote: 1, saved: true }
-      # redirect_to request.referer
+      # render json: { vote: 1, saved: true }
+      update_exp
+      redirect_to request.referer
     else
       redirect_to request.referer, notice: "Sorry we weren't able to register your vote, please try again."
     end
@@ -14,6 +15,7 @@ class ThingUpvotesController < ApplicationController
   def destroy
     @upvote = ThingUpvote.find_by(upvote_params)
     @upvote.destroy
+    update_exp
     redirect_to request.referer
   end
 

@@ -89,7 +89,7 @@
         <div class="upvote-button col-lg-6 col-md-6">
           <% if ThingDownvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
             <% if ThingUpvote.find_by(thing_id: t.id, user_id: current_user.id).nil? %>
-              <%= form_for ThingUpvote.new, url: add_upvote_path, remote: true, method: :post, html:{class:"upvote-form"} do |f| %>
+              <%= form_for ThingUpvote.new, url: add_upvote_path, method: :post, html:{class:"upvote-form"} do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit, class:"vote-btn" do  %>
@@ -97,7 +97,7 @@
                  <% end %>
                <% end %>
             <% else %>
-              <%= form_for :thing_upvote, url: remove_upvote_path, html:{class:"upvote-form2"}, remote: true, method: :delete do |f| %>
+              <%= form_for :thing_upvote, url: remove_upvote_path, html:{class:"upvote-form2"}, method: :delete do |f| %>
               <%= f.hidden_field :thing_id, value:t.id %>
               <%= f.hidden_field :user_id, value:current_user.id %>
               <%= f.button :submit, class:"vote-btn" do %>

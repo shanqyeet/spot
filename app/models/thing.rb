@@ -9,7 +9,6 @@ class Thing < ApplicationRecord
   validates :price, presence: true
   validates :unit, presence: true
 
-
   geocoded_by :full_address   # can also be an IP address
   after_validation :geocode          # auto-fetch coordinates
   # reverse_geocoded_by :latitude, :longitude
