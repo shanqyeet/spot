@@ -7,7 +7,7 @@ RSpec.describe "home features" do
   end
 
  it "signs me in" do
-   visit '/'
+   visit '/signin'
    within ".login-form" do
      fill_in 'Email', with: 'test@test.com'
      fill_in 'Password', with: '1234'

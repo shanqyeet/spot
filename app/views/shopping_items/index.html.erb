@@ -7,7 +7,7 @@
         window.history.back();
       }
     </script>
-    
+
   <h1 class="text-center">My Shopping List</h1>
   <div class="shopping-list-form col-lg-8 col-md-8 col-lg-offset-2 col-md-offset-2">
     <%= form_for ShoppingItem.new, url:user_shopping_items_path do |f| %>
@@ -23,7 +23,9 @@
   </div>
 
   <% if @shopping_items.blank? %>
+  <div class="row">
     <h3>Hey, you have no items on your list. create one today!</h3>
+  </div>
   <% else %>
   <div class="table-box">
     <table class="table table-hover">

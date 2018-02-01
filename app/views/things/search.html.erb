@@ -8,23 +8,27 @@
           <%= label_tag("Search by Keywords") %>
           <%= text_field_tag(:search, params[:search], class:"form-control") %>
         </div>
-
+        <% if !Thing.pluck(:country).blank? %>
         <% @countries = Thing.pluck(:country).uniq!.sort %>
         <div class="form-group">
           <%= label_tag("Country") %>
           <%= select_tag(:country, options_for_select(@countries),include_blank: true, class:"form-control") %>
         </div>
+        <% end %>
+        <% if !Thing.pluck(:state).blank? %>
         <% @state = Thing.pluck(:state).uniq!.sort %>
         <div class="form-group">
           <%= label_tag("State") %>
           <%= select_tag(:state, options_for_select(@state),include_blank: true, class:"form-control") %>
         </div>
+        <% end %>
+        <% if !Thing.pluck(:city).blank? %>
         <% @city = Thing.pluck(:city).uniq!.sort %>
         <div class="form-group">
           <%= label_tag("City") %>
           <%= select_tag(:city, options_for_select(@city),include_blank: true, class:"form-control") %>
         </div>
-
+        <% end %>
         <div class="form-group">
           <%= submit_tag("Search", class:"btn btn-lg btn-info form-control")%>
         </div>
