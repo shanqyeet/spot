@@ -60,15 +60,17 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user = User.find(current_user.id)
     @user.update(user_params)
-    redirect_to request.referer
+    @user.errors
+    redirect_to @user
   end
 
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :first_name, :last_name, :gender, :city, :state, :country)
+    params.require(:user).permit(:email,:password, :first_name, :last_name, :gender, :city, :state, :country)
   end
 
 
