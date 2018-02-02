@@ -1,6 +1,9 @@
 class ThingsController < ApplicationController
 
   def new
+    if !logged_in?
+      redirect_to root_path
+    end 
     @things = Thing.new
   end
 
