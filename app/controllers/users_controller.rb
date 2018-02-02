@@ -56,10 +56,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    if !logged_in?
-      redirect_to root_path
-    end 
-    @user = User.find(current_user.id)
+    if current_user
+      @user = User.find(current_user.id)
+    else
+      redirect_to '/'
+    end
   end
 
   def update

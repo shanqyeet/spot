@@ -1,10 +1,11 @@
 class ThingsController < ApplicationController
 
   def new
-    if !logged_in?
-      redirect_to root_path
-    end 
-    @things = Thing.new
+    if current_user
+      @things = Thing.new
+    else
+      redirect_to '/'
+    end
   end
 
   def create
