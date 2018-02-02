@@ -20,7 +20,7 @@ class ThingUpvotesController < ApplicationController
   end
 
   def update_exp
-    @thing = Thing.find_by(id: params[:thing_upvote][:thing_id])
+    @thing = Thing.find(params[:thing_upvote][:thing_id])
     count = @thing.thing_upvotes.count - @thing.thing_downvotes.count
     if count <= 0
       @thing.update(allocated_exp: 0)
