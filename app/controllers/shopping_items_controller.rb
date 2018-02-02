@@ -2,7 +2,7 @@ class ShoppingItemsController < ApplicationController
 
     def index
       if current_user
-        @shopping_items = ShoppingItem.order(created_at: :asc)
+        @shopping_items = ShoppingItem.where(user_id: current_user.id).order(created_at: :asc)
       else
         redirect_to '/'
       end
